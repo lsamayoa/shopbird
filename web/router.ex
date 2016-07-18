@@ -17,6 +17,19 @@ defmodule Shopbird.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    resources "/products", ProductController
+
+    get "/registration", RegistrationController, :new
+    post "/registration", RegistrationController, :create
+  end
+
+  scope "/auth", Shopbird do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+    get "/logout", AuthController, :delete
   end
 
   # Other scopes may use custom stacks.
