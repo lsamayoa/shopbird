@@ -28,7 +28,7 @@ config :guardian, Guardian,
   issuer: "Shopbird",
   ttl: { 30, :days },
   verify_issuer: true, # optional
-  secret_key: "testKeyblah123",
+  secret_key: System.get_env("AUTH_SECRET_KEY") || "testKeyblah123",
   serializer: Shopbird.GuardianSerializer
 
 config :ueberauth, Ueberauth,
