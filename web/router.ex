@@ -13,27 +13,42 @@ defmodule Shopbird.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :browser_auth do
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource
+  end
+
+  pipeline :api_auth do
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
+  end
+
+  pipeline :authenticated do
+    plug Guardian.Plug.EnsureAuthenticated, handler: Shopbird.AuthController
+  end
+
   scope "/", Shopbird do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser, :browser_auth] # Use the default browser stack
 
     get "/", PageController, :index
-    resources "/products", ProductController
 
     get "/registration", RegistrationController, :new
     post "/registration", RegistrationController, :create
   end
 
   scope "/auth", Shopbird do
-    pipe_through :browser
+    pipe_through [:browser, :browser_auth]
 
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
     post "/:provider/callback", AuthController, :callback
     get "/logout", AuthController, :delete
+    delete "/logout", AuthController, :delete
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Shopbird do
-  #   pipe_through :api
-  # end
+  scope "/products", Shopbird do
+    pipe_through [:browser, :browser_auth, :authenticated]
+    resources "/", ProductController
+  end
+
 end

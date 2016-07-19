@@ -35,6 +35,13 @@ defmodule Shopbird.AuthController do
       |> redirect(to: "/")
   end
 
+  def unauthenticated(conn, _params) do
+    conn
+      # |> put_status(401)
+      |> put_flash(:error, "Authentication required")
+      |> redirect(to: "/")
+  end
+
   defp _get_user_by_auth(auth), do: Shopbird.User.find_user_by_auth(auth) |> Repo.one
 
   defp _check_password(user, password) when not is_nil(user), do: checkpw(password, user.encrypted_password)
