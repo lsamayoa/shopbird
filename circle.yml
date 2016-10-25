@@ -4,6 +4,8 @@ machine:
     MIX_ENV: "test"
 
 dependencies:
+  cache_directories:
+    - ~/.asdf
   override:
     - ./circle_pre_build.sh
     - mix deps.compile
