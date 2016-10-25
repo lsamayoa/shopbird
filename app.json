@@ -1,6 +1,7 @@
 {
   "name": "shopbird",
   "scripts": {
+    "postdeploy": "mix ecto.migrate"
   },
   "env": {
     "AUTH_SECRET_KEY": {
