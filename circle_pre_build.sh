@@ -15,7 +15,7 @@ asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git
 echo “erlang $erlang_version” >> .tool-versions
 echo “elixir $elixir_version” >> .tool-versions
 echo "Erlang/Elixir versions:"
-echo .tool-versions
+cat .tool-versions
 # Install erlang/elixir
 asdf install
 # Get dependencies
