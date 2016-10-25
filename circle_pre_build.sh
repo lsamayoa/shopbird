@@ -6,8 +6,13 @@ if ! asdf | grep version; then
  git clone https://github.com/HashNuke/asdf.git ~/.asdf;
 fi
 # Add plugins for asdf
-asdf plugin-add erlang https://github.com/HashNuke/asdf-erlang.git
-asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git
+if ! asdf plugin-list | grep erlang; then
+  asdf plugin-add erlang https://github.com/HashNuke/asdf-erlang.git
+fi
+
+if ! asdf plugin-list | grep elixir; then
+  asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git
+fi
 
 # Extract vars from elixir_buildpack.config
 . elixir_buildpack.config
