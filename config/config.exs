@@ -43,7 +43,7 @@ config :ueberauth, Ueberauth,
 config :sentry, dsn: System.get_env("SENTRY_DSN"),
    included_environments: ~w(production staging),
    error_logger: true,
-   environment_name: System.get_env("DEPLOY_ENV") || "development"
+   environment_name: System.get_env("SENTRY_ENV") || "development"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
