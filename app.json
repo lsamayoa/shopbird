@@ -5,13 +5,29 @@
   },
   "env": {
     "AUTH_SECRET_KEY": {
-      "generator": "secret"
+      "required": true,
+      "generator": "secret",
+      "description": "Secret key base to generate secrets for authentication"
     },
     "POOL_SIZE": {
-      "required": true
+      "required": true,
+      "description": "Database connection pool_size"
     },
     "SECRET_KEY_BASE": {
-      "generator": "secret"
+      "required": true,
+      "generator": "secret",
+      "description": "Secret key base to generate secrets for the app"
+    },
+    "SENTRY_ENV": {
+      "required": false,
+      "description": "Environment for sentry error reporting",
+      "value": "development"
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": true
     }
   },
   "formation": {
