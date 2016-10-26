@@ -18,8 +18,28 @@ defmodule Shopbird.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Shopbird, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin, :ueberauth, :ueberauth_identity, :sentry]]
+     applications: applications(Mix.env)]
+  end
+
+  def applications(env) when env in [:test] do
+    applications(:default) ++ [:ex_machina]
+  end
+
+  def applications(_) do
+    [
+      :phoenix,
+      :phoenix_pubsub,
+      :phoenix_html,
+      :cowboy,
+      :logger,
+      :gettext,
+      :phoenix_ecto,
+      :postgrex,
+      :comeonin,
+      :ueberauth,
+      :ueberauth_identity,
+      :sentry
+    ]
   end
 
   # Specifies which paths to compile per environment.
@@ -36,6 +56,7 @@ defmodule Shopbird.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
+     {:ex_machina, "~> 1.0", only: :test},
      {:gettext, "~> 0.11"},
      {:sentry, "~> 1.0"},
      {:cowboy, "~> 1.0"},
