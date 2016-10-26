@@ -18,15 +18,16 @@
       "generator": "secret",
       "description": "Secret key base to generate secrets for the app"
     },
-    "SENTRY_DSN": {
-      "required": false,
-      "description": "DSN for sentry error reporting",
-      "value": ""
-    },
     "SENTRY_ENV": {
       "required": false,
       "description": "Environment for sentry error reporting",
       "value": "development"
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": true
     }
   },
   "formation": {
