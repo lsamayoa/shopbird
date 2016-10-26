@@ -3,7 +3,7 @@ defmodule Shopbird.UserTest do
 
   alias Shopbird.User
 
-  @valid_attrs %{email: "some content", first_name: "some content", last_name: "some content", password: "some content"}
+  @valid_attrs %{email: "test.user@email.com", first_name: "John", last_name: "Tester", password: "asdf1234", password_confirmation: "asdf1234"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
