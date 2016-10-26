@@ -12,13 +12,13 @@ defmodule Shopbird.ProductControllerTest do
 
   test "lists all entries on index", %{user: user} do
     conn = guardian_login(user)
-    conn = conn |> get product_path(conn, :index)
+    conn = get conn, product_path(conn, :index)
     assert html_response(conn, 200) =~ "Listing products"
   end
 
   test "renders form for new resources", %{user: user} do
     conn = guardian_login(user)
-    conn = conn |> get product_path(conn, :new)
+    conn = get conn, product_path(conn, :new)
     assert html_response(conn, 200) =~ "New product"
   end
 
