@@ -3,8 +3,14 @@ defmodule Shopbird.ProductControllerTest do
   import Shopbird.Factory
 
   alias Shopbird.Product
-  @valid_attrs %{description: "some content", name: "some content", price_cents: 42}
-  @invalid_attrs %{}
+  @valid_attrs %{
+    description: "Slides in snow for your mobility",
+    name: "Skis",
+    price_cents: 42
+  }
+  @invalid_attrs %{
+    description: 42
+  }
 
   setup do
     {:ok, %{user: insert(:user)}}
@@ -36,7 +42,7 @@ defmodule Shopbird.ProductControllerTest do
   end
 
   test "shows chosen resource", %{user: user} do
-    product = Repo.insert! %Product{}
+    product = insert(:product)
     conn = guardian_login(user)
     conn = get conn, product_path(conn, :show, product)
     assert html_response(conn, 200) =~ "Show product"
@@ -50,14 +56,14 @@ defmodule Shopbird.ProductControllerTest do
   end
 
   test "renders form for editing chosen resource", %{user: user} do
-    product = Repo.insert! %Product{}
+    product = insert(:product)
     conn = guardian_login(user)
     conn = get conn, product_path(conn, :edit, product)
     assert html_response(conn, 200) =~ "Edit product"
   end
 
   test "updates chosen resource and redirects when data is valid", %{user: user} do
-    product = Repo.insert! %Product{}
+    product = insert(:product)
     conn = guardian_login(user)
     conn = put conn, product_path(conn, :update, product), product: @valid_attrs
     assert redirected_to(conn) == product_path(conn, :show, product)
@@ -65,14 +71,14 @@ defmodule Shopbird.ProductControllerTest do
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{user: user} do
-    product = Repo.insert! %Product{}
+    product = insert(:product)
     conn = guardian_login(user)
     conn = put conn, product_path(conn, :update, product), product: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit product"
   end
 
   test "deletes chosen resource", %{user: user} do
-    product = Repo.insert! %Product{}
+    product = insert(:product)
     conn = guardian_login(user)
     conn = delete conn, product_path(conn, :delete, product)
     assert redirected_to(conn) == product_path(conn, :index)
