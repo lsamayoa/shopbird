@@ -41,11 +41,13 @@ defmodule Shopbird.Router do
   scope "/auth", Shopbird do
     pipe_through [:browser, :browser_auth]
 
+    # This must come up the top since there is a variable route
+    get "/logout", AuthController, :delete
+    delete "/logout", AuthController, :delete
+
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
     post "/:provider/callback", AuthController, :callback
-    get "/logout", AuthController, :delete
-    delete "/logout", AuthController, :delete
   end
 
   scope "/products", Shopbird do
