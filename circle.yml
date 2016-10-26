@@ -1,0 +1,20 @@
+machine:
+  environment:
+    PATH: "$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
+    MIX_ENV: "test"
+
+dependencies:
+  cache_directories:
+    - ~/.asdf
+  override:
+    - ./circle_pre_build.sh
+    - mix deps.compile
+    - mix compile
+database:
+  override:
+    - mix ecto.drop
+    - mix ecto.create
+    - mix ecto.migrate
+test:
+  override:
+    - mix test
