@@ -3,6 +3,9 @@ defmodule Shopbird.User do
   use Shopbird.Web, :model
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
+  alias Shopbird.Organization
+  alias Shopbird.OrganizationUserMembership
+
   schema "users" do
     field :first_name, :string
     field :last_name, :string
@@ -11,6 +14,8 @@ defmodule Shopbird.User do
 
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
+
+    many_to_many :organizations, Organization, join_through: OrganizationUserMembership
 
     timestamps()
   end
