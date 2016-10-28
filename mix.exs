@@ -10,6 +10,7 @@ defmodule Shopbird.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
+     preferred_cli_env: [espec: :test],
      deps: deps()]
   end
 
@@ -50,19 +51,21 @@ defmodule Shopbird.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.0"},
+    [{:phoenix, "~> 1.2.1"},
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:ex_machina, "~> 1.0", only: :test},
+     {:espec, "~> 1.1.1", only: :test},
+     {:espec_phoenix, "~> 0.6.1", only: :test, app: false},
      {:gettext, "~> 0.11"},
      {:sentry, "~> 1.0"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.5"},
-     {:guardian, "~> 0.12.0"},
-     {:ueberauth, "~> 0.2"},
+     {:guardian, "~> 0.13.0"},
+     {:ueberauth, "~> 0.3"},
      {:ueberauth_identity, "~> 0.2"}]
   end
 

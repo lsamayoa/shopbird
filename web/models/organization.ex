@@ -18,8 +18,9 @@ defmodule Shopbird.Organization do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, [:name, :owner_id])
+    |> assoc_constraint(:owner)
+    |> validate_required([:name, :owner_id])
   end
 
 end
