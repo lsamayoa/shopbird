@@ -8,7 +8,7 @@ defmodule Shopbird.Repo.Migrations.CreateOrganization do
 
       timestamps()
     end
-    create index(:organizations, [:owner_id])
+    create index(:organizations, [:owner_id], unique: true)
 
   end
 end

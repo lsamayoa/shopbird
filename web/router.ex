@@ -3,6 +3,8 @@ defmodule Shopbird.Router do
   use Plug.ErrorHandler
   use Sentry.Plug
 
+  @authenticated_browser [:browser, :browser_auth, :authenticated]
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -51,8 +53,13 @@ defmodule Shopbird.Router do
   end
 
   scope "/products", Shopbird do
-    pipe_through [:browser, :browser_auth, :authenticated]
+    pipe_through @authenticated_browser
     resources "/", ProductController
+  end
+
+  scope "/organizations", Shopbird do
+    pipe_through @authenticated_browser
+    resources "/", OrganizationController, only: [:new, :create, :show]
   end
 
 end

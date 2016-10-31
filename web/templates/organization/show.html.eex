@@ -1,0 +1,10 @@
+<h2><%= gettext("My Organization")%></h2>
+
+<ul>
+
+  <li>
+    <strong><%= gettext("Organization Name")%>:</strong>
+    <%= @organization.name %>
+  </li>
+
+</ul>

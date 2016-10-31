@@ -18,8 +18,12 @@ defmodule Shopbird.Organization do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
+    |> cast(params, [:name, :owner_id])
+    |> cast_assoc(:owner)
     |> validate_required([:name])
+    |> validate_required(:owner_id, message: "Owner can't be blank")
+    |> unique_constraint(:owner_id, message: "A user cannot own more than 1 organization")
+    |> foreign_key_constraint(:owner_id, message: "A valid owner must be set for the organization")
   end
 
 end
