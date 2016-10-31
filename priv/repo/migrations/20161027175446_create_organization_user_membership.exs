@@ -9,6 +9,7 @@ defmodule Shopbird.Repo.Migrations.CreateOrganizationUserMembership do
 
       timestamps()
     end
+    create index(:organization_user_memberships, [:user_id, :organization_id], unique: true)
     create index(:organization_user_memberships, [:user_id])
     create index(:organization_user_memberships, [:organization_id])
 

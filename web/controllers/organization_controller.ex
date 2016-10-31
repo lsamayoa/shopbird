@@ -42,9 +42,9 @@ defmodule Shopbird.OrganizationController do
 
   defp _validate_organization(conn), do: (if conn.assigns[:organization] == nil, do: {:error, 404, gettext("Organization does not exist")}, else: {:ok})
 
-  defp _validate_organization_membership(%Plug.Conn{} = conn), do: _validate_organization_membership(conn.assigns)
   defp _validate_organization_membership(true), do: {:ok}
-  defp _validate_organization_membership(false), do: {:error, 403, gettext("User does not have enough permissions")}
+  defp _validate_organization_membership(nil), do: {:error, 403, gettext("User does not have enough permissions")}
+  defp _validate_organization_membership(%Plug.Conn{} = conn), do: _validate_organization_membership(conn.assigns)
   defp _validate_organization_membership(%{} = %{:organization => %{:id => organization_id}, :current_user => %{:id => user_id} }) do
     _validate_organization_membership(Organization.check_organization_membership(organization_id, user_id) |> Repo.one)
   end

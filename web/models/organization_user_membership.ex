@@ -14,7 +14,12 @@ defmodule Shopbird.OrganizationUserMembership do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:role])
-    |> validate_required([:role])
+    |> cast(params, [:role, :user_id, :organization_id])
+    |> cast_assoc(:user)
+    |> cast_assoc(:organization)
+    |> validate_required([:role, :user_id, :organization_id])
+    |> foreign_key_constraint(:organization_id)
+    |> foreign_key_constraint(:user_id)
+    |> unique_constraint(:organization_id, name: :organization_user_memberships_user_id_organization_id_index)
   end
 end
