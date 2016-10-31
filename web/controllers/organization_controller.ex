@@ -15,8 +15,7 @@ defmodule Shopbird.OrganizationController do
   end
 
   def create(conn, %{"organization" => organization_params}) do
-    curret_user_id = conn.assigns[:current_user].id
-    changeset = Organization.changeset(%Organization{owner_id: curret_user_id}, organization_params)
+    changeset = Organization.changeset(%Organization{owner_id: conn.assigns[:current_user].id}, organization_params)
     case Repo.insert(changeset) do
       {:ok, organization} ->
         conn
@@ -48,6 +47,5 @@ defmodule Shopbird.OrganizationController do
   defp _validate_organization_membership(%{} = %{:organization => %{:id => organization_id}, :current_user => %{:id => user_id} }) do
     _validate_organization_membership(Organization.check_organization_membership(organization_id, user_id) |> Repo.one)
   end
-
 
 end
