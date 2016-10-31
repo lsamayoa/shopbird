@@ -26,4 +26,11 @@ defmodule Shopbird.Organization do
     |> foreign_key_constraint(:owner_id, message: "A valid owner must be set for the organization")
   end
 
+  def check_organization_membership(organization_id, user_id) do
+    from o in Shopbird.Organization,
+      left_join: oum in OrganizationUserMembership, on: oum.organization_id == o.id,
+      where: o.id == ^organization_id and (o.owner_id == ^user_id or oum.user_id == ^user_id),
+      select: count(o.id) == 1
+  end
+
 end
