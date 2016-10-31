@@ -17,4 +17,4 @@ database:
     - mix ecto.migrate
 test:
   override:
-    - mix test
+    - mix espec
