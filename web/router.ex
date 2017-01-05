@@ -20,6 +20,7 @@ defmodule Shopbird.Router do
   pipeline :browser_auth do
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource
+    plug Shopbird.CurrentUserPlug
   end
 
   pipeline :api_auth do
