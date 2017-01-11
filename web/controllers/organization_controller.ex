@@ -25,7 +25,15 @@ defmodule Shopbird.OrganizationController do
   end
 
   def show(conn, %{"id" => id}) do
-    conn = _assign_organization(conn, id)
+    organization = Organization.with_memberships
+      |> Organization.with_owner
+      |> Repo.get(id)
+    conn
+      |> assign(:organization, organization)
+      |> _show()
+  end
+
+  defp _show(conn) do
     with {:ok, conn} <- _validate_organization_presence(conn),
          {:ok} <- _validate_organization_membership(conn),
        do: render(conn, "show.html"),
@@ -33,8 +41,6 @@ defmodule Shopbird.OrganizationController do
   end
 
   defp _handle_error(conn, {:error, code, msg}), do: render(conn, Shopbird.ErrorView, "#{code}.html", error: msg)
-
-  defp _assign_organization(conn, organization_id), do: assign(conn, :organization, Repo.get(Organization, organization_id))
 
   defp _validate_organization_presence(%{assigns: %{organization: nil}}), do: {:error, 404, gettext("Organization does not exist")}
   defp _validate_organization_presence(%{assigns: %{organization: _organization}} = conn), do: {:ok, conn}

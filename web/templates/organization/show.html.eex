@@ -1,10 +1,22 @@
-<h2><%= gettext("My Organization")%></h2>
-
-<ul>
-
-  <li>
-    <strong><%= gettext("Organization Name")%>:</strong>
-    <%= @organization.name %>
-  </li>
-
-</ul>
+<div class="row">
+  <h2><%= @organization.name %></h2>
+</div>
+<div class="row">
+  <h3><%= gettext("Members")%></h3>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <th><%= gettext("ID")%></th>
+      <th><%= gettext("Email")%></th>
+      <th><%= gettext("Role")%></th>
+    </thead>
+    <tbody>
+      <%= for membership <- @organization.memberships do %>
+        <tr>
+          <td><%= membership.user.id %></td>
+          <td><%= membership.user.email %></td>
+          <td><%= membership.role %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

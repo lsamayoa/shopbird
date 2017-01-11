@@ -14,7 +14,9 @@ defmodule Shopbird.Product do
   """
   def changeset(product, params \\ %{}) do
     product
-    |> cast(params, [:name, :price_cents, :description])
+    |> cast(params, [:name, :price_cents, :description, :organization_id])
     |> validate_required([:name, :price_cents, :description])
+    |> validate_required(:organization_id, message: "Organization can't be blank")
+    |> assoc_constraint(:organization, message: "A valid organization must be set for the organization")
   end
 end

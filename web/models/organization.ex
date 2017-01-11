@@ -9,9 +9,11 @@ defmodule Shopbird.Organization do
     belongs_to :owner, User
 
     many_to_many :members, User, join_through: OrganizationUserMembership
-
+    has_many :memberships, OrganizationUserMembership
     timestamps()
   end
+
+  ## Changesets
 
   @doc """
   Builds a changeset based on the `struct` and `params`.
@@ -25,6 +27,14 @@ defmodule Shopbird.Organization do
     |> unique_constraint(:owner_id, message: "A user cannot own more than 1 organization")
     |> foreign_key_constraint(:owner_id, message: "A valid owner must be set for the organization")
   end
+
+  ## Queries
+
+  def with_owner(), do: with_owner(Shopbird.Organization)
+  def with_owner(query), do: from(q in query, preload: :owner)
+
+  def with_memberships(), do: with_memberships(Shopbird.Organization)
+  def with_memberships(query), do: from(q in query, preload: [memberships: :user])
 
   def validate_organization_membership(organization_id, user_id) do
     from o in Shopbird.Organization,
